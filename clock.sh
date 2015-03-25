@@ -1,7 +1,9 @@
 #!/bin/bash
+
+#输出帮助信息的函数help
 function help
 {
-cat<<_EFO_
+cat<<_EOF_
 	clock -- show a big clock on your terminal;
 		-h show this page;
 		-s "ScreenSaver" mode,exits on first keystroke,default prese q to quit;
@@ -9,14 +11,13 @@ cat<<_EFO_
 
 	made by XiyuChen
 	email:NwsuafChenXiyu@gmail.com
-_EFO_
+_EOF_
 exit 0;
 }
-
+#处理用户传入的参数
 set -- $(getopt hsC: "$@");
-
+#设置变量ScreenSaver标志是否为屏保模式，0为正常模式，1为屏保模式
 ScreenSaver=0;
-
 while test -n "$1" ;
 do
 	case $1 in 
@@ -28,8 +29,9 @@ do
 	esac
 done
 
+#隐藏光标
 echo -e "\e[?25l";
-
+#绘制空格的函数，需要一个参数num 表示添加空格的数量
 function Add_space
 {
 	local i ;
@@ -38,15 +40,20 @@ function Add_space
 		echo -n " ";
 	done
 }
-
+#绘制时钟的函数（当初设想的符号为*所以命名为Add_star了）需要一个参数num，表示绘制的个数
 function Add_Star
 {
 	local i ;
+	#设置背景色
+	echo -en "\033[1;47m" ;
 	for (( i = 0 ; i < $1 ; i++)) ; do
-		echo -ne "\033[1;47m \033[0m";
+		echo -ne " ";
 	done
+	#还原背景色
+	echo -ne "\e[0m";
 }
 
+#绘制数码管区域一的图像
 function AREA1
 {
 	local i;
