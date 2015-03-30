@@ -1,4 +1,4 @@
-ParseIpAddr: ParseIpAddr.cpp
-	g++ -o ParseIpAddr ParseIpAddr.cpp
+ParseIpAddr: ParseIpAddr.c
+	gcc -o ParseIpAddr ParseIpAddr.c
 clean:
 	rm *.o ParseIpAddr 
